@@ -1,6 +1,6 @@
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Love+Ya+Like+A+Sister&pause=1000&color=670C0C&center=true&width=435&lines=Nothing's+here...)](https://git.io/typing-svg)
 
-[![Star History](https://api.lucabubi.me/chart?username=Terrenoss&repository=terrenoss&color=red)](https://github.com/lucabubi/star-history)
+[![Star History](https://api.lucabubi.me/chart?username=Terrenoss&repository=terrenoss&color=red)](https://github.com/terrenoss/star-history)
 
 ### 🔝 Top Contributed Repo
 ![](https://github-contributor-stats.vercel.app/api?username=Terrenoss&limit=5&theme=dark&combine_all_yearly_contributions=true)
