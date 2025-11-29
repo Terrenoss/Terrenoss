@@ -1,7 +1,7 @@
 <div align="center">
 
-<!-- HEADER : Dégradé Rouge/Noir pour matcher ton avatar -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=000000,670C0C,000000&height=250&section=header&text=Terrenoss&fontSize=80&fontAlign=50&animation=fadeIn&fontColor=ffffff&desc=D%C3%A9veloppeur%20C%23%20%26%20.NET%20%7C%20Passionn%C3%A9&descAlign=50" />
+<!-- HEADER : J'ai retiré le "&" qui causait le bug XML -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=000000,670C0C,000000&height=250&section=header&text=Terrenoss&fontSize=80&fontAlign=50&animation=fadeIn&fontColor=ffffff&desc=Dev%20C%23%20.NET%20%7C%20Passionn%C3%A9&descAlign=50" />
 
 ### 👤 À propos
 
@@ -15,7 +15,6 @@ Actuellement, je travaille sur des projets comme **Strivea** (App Desktop) et **
 
 *Classé par maîtrise : du "Main Char" au "Smurf"*
 
-<!-- J'ai ordonné les icônes selon ta demande : C#/.NET en premier, puis Web, SQL, C++, et enfin la stack JS/TS -->
 <img src="https://skillicons.dev/icons?i=cs,dotnet,visualstudio,html,css,mysql,cpp,nextjs,ts,git&perline=5" />
 
 ---
@@ -31,13 +30,16 @@ Actuellement, je travaille sur des projets comme **Strivea** (App Desktop) et **
 
 ### 📊 Statistiques
 
-<!-- Thème rouge "radical" pour aller avec ton profil -->
+<!-- J'ai retiré "count_private" qui cause souvent le "Error Fetching Resource" -->
 <p align="center">
-  <img width="48%" src="https://github-readme-stats.vercel.app/api?username=Terrenoss&show_icons=true&theme=radical&hide_border=true&count_private=true&include_all_commits=true" />
+  <img width="48%" src="https://github-readme-stats.vercel.app/api?username=Terrenoss&show_icons=true&theme=radical&hide_border=true&include_all_commits=true" />
   <img width="48%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Terrenoss&layout=compact&theme=radical&hide_border=true&langs_count=6" />
 </p>
 
-<!-- Compteur de visites simple et discret -->
+<!-- LE SERPENT (S'affichera une fois l'étape 2 terminée) -->
+<br/>
+<img src="https://github.com/Terrenoss/Terrenoss/blob/output/github-contribution-grid-snake.svg" alt="Snake animation" />
+
 <br/>
 <img src="https://visitcount.itsvg.in/api?id=Terrenoss&icon=5&color=4" />
 
