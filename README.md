@@ -1,7 +1,7 @@
 <div align="center">
 
-<!-- HEADER : J'ai retiré le "&" qui causait le bug XML -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=000000,670C0C,000000&height=250&section=header&text=Terrenoss&fontSize=80&fontAlign=50&animation=fadeIn&fontColor=ffffff&desc=Dev%20C%23%20.NET%20%7C%20Passionn%C3%A9&descAlign=50" />
+<!-- HEADER CORRIGÉ : Police réduite à 65 pour éviter le chevauchement -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=000000,670C0C,000000&height=250&section=header&text=Terrenoss&fontSize=65&fontAlign=50&animation=fadeIn&fontColor=ffffff&desc=Dev%20C%23%20.NET%20%7C%20Passionn%C3%A9&descAlign=50&descAlignY=60" />
 
 ### 👤 À propos
 
@@ -30,17 +30,19 @@ Actuellement, je travaille sur des projets comme **Strivea** (App Desktop) et **
 
 ### 📊 Statistiques
 
-<!-- J'ai retiré "count_private" qui cause souvent le "Error Fetching Resource" -->
+<!-- CORRECTION : Suppression des paramètres lourds pour éviter les erreurs de chargement -->
 <p align="center">
-  <img width="48%" src="https://github-readme-stats.vercel.app/api?username=Terrenoss&show_icons=true&theme=radical&hide_border=true&include_all_commits=true" />
+  <img width="48%" src="https://github-readme-stats.vercel.app/api?username=Terrenoss&show_icons=true&theme=radical&hide_border=true&rank_icon=github" />
   <img width="48%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Terrenoss&layout=compact&theme=radical&hide_border=true&langs_count=6" />
 </p>
 
-<!-- LE SERPENT (S'affichera une fois l'étape 2 terminée) -->
+<!-- LE SERPENT (Fonctionne maintenant grâce à ton Action) -->
 <br/>
 <img src="https://github.com/Terrenoss/Terrenoss/blob/output/github-contribution-grid-snake.svg" alt="Snake animation" />
 
 <br/>
-<img src="https://visitcount.itsvg.in/api?id=Terrenoss&icon=5&color=4" />
+
+<!-- NOUVEAU COMPTEUR : Plus fiable et stylé en rouge -->
+<img src="https://komarev.com/ghpvc/?username=Terrenoss&style=flat-square&color=red&label=VUES+PROFIL" alt="Compteur de vues" />
 
 </div>
