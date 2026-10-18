@@ -1,10 +1,9 @@
 <div align="center">
 
-<!-- BANNIÈRE (générée par cards/build.py) -->
-<img src="assets/banniere.svg" width="100%" alt="Terrenoss, développeur full-stack et game dev en France : apps desktop et web pour les joueurs de League of Legends, et jeux vidéo sous Unity, seul ou en équipe. Stack : C#, .NET, Unity, TypeScript, Next.js, Electron." />
+<!-- Tous les visuels de assets/ sont générés par cards/build.py -->
+<img src="assets/banniere.svg" width="100%" alt="Terrenoss, développeur full-stack et game dev en France : apps pour les joueurs de League of Legends, jeux sous Unity. Stack : C#, .NET, Unity, TypeScript, Next.js, Electron." />
 
-<!-- PROJETS PHARES (cartes générées par cards/build.py) -->
-### Projets phares
+### <img src="assets/titre-projets.svg" width="640" alt="Projets" />
 
 <img src="assets/projet-porotalk.svg" width="390" alt="PoroTalk, app desktop (code privé) : chat vocal éphémère pour League of Legends, connexion automatique avec tes coéquipiers en WebRTC P2P, sans lien à partager. Electron, TypeScript, WebRTC." />
 <a href="https://rift.ddns.net"><img src="assets/projet-cashback.svg" width="390" alt="CashBack, bot Discord et site web (code privé) : paris en fausse monnaie sur les games de tes amis, et Rift, un site de stats façon op.gg sur rift.ddns.net. TypeScript, Next.js, Prisma." /></a>
@@ -13,10 +12,7 @@
 
 Aussi sur l'établi : **[Stats-Of-Legends](https://github.com/Terrenoss/Stats-Of-Legends)** (web Next.js)
 
----
-
-<!-- GAME DEV -->
-### Game Dev
+### <img src="assets/titre-game-dev.svg" width="640" alt="Game dev" />
 
 <img src="assets/jeu-ascensio.svg" width="100%" alt="Ascensio, jeu de cartes roguelike en 3D (projet d'équipe, 2026, code privé) : former des mains de poker sur une grille 5×5 avec un jeu classique et des atouts de tarot, inspiré de Balatro et CloverPit. Mon rôle : gameplay des cartes, calcul du score et détection des mains, boutique, sauvegarde. Unity 6, C#, DOTween." />
 
@@ -24,30 +20,16 @@ Aussi sur l'établi : **[Stats-Of-Legends](https://github.com/Terrenoss/Stats-Of
 
 <img src="assets/jeux-unity.svg" width="100%" alt="Aussi sur Unity : Super Meat Boy (remake, plateforme 2D), World of Goo (remake, structures physiques), Zelda-like (quêtes, inventaire, sauvegarde), Factorio-like (convoyeurs, inserteurs, production), ShroomWitch Garden (god game en équipe), Tower Defense (codé depuis un diagramme UML)." />
 
----
+### <img src="assets/titre-arsenal.svg" width="640" alt="Arsenal" />
 
-<!-- STACK TECHNIQUE -->
-### Arsenal & Grimoire
+<img src="assets/arsenal.svg" width="100%" alt="Desktop et jeu : C#, .NET, Avalonia, Unity, C++. Web : TypeScript, React, Next.js, Node.js, Electron. Données et outils : Python, PostgreSQL, Redis, Docker, Git." />
 
-<img src="https://skillicons.dev/icons?i=cs,dotnet,unity,cpp,ts,react,nextjs,nodejs,electron,py,postgres,redis,docker,git&perline=7" alt="C#, .NET, Unity, C++, TypeScript, React, Next.js, Node.js, Electron, Python, PostgreSQL, Redis, Docker, Git" />
+### <img src="assets/titre-activite.svg" width="640" alt="Activité" />
 
-<sub>C# · .NET · Avalonia · Unity · C++ · TypeScript · React · Next.js · Node.js · Electron · Python · PostgreSQL · Redis · Docker · Git</sub>
+<a href="https://github.com/Terrenoss"><img src="https://streak-stats.demolab.com/?user=Terrenoss&locale=fr&hide_border=true&background=0A0A0C&stroke=3A2F1C&ring=C8AA6E&fire=D3202C&currStreakNum=F0E6D2&sideNums=F0E6D2&currStreakLabel=C8AA6E&sideLabels=C8AA6E&dates=8F877A" alt="Série de contributions GitHub de Terrenoss" /></a>
 
----
+<br/><br/>
 
-<!-- STATISTIQUES (STREAK) -->
-### Statistiques de combat
-
-<p align="center">
-  <a href="https://github.com/Terrenoss">
-    <img src="https://streak-stats.demolab.com/?user=Terrenoss&theme=radical&hide_border=true&date_format=j%20M%5B%20Y%5D&ring=D4AF37&fire=D4AF37&currStreakNum=D4AF37&sideNums=D4AF37&currStreakLabel=D4AF37" alt="Série de contributions GitHub de Terrenoss" />
-  </a>
-</p>
-
-<!-- VILLE 3D ISOMÉTRIQUE -->
-<br/>
-<p align="center">
-  <img src="https://github.com/Terrenoss/Terrenoss/blob/main/profile-3d-contrib/profile-night-rainbow.svg" alt="Contributions GitHub de l'année représentées en ville 3D" width="100%" />
-</p>
+<img src="profile-3d-contrib/profile-terrenoss.svg" width="100%" alt="Contributions GitHub de l'année représentées en ville 3D" />
 
 </div>

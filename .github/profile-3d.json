@@ -1,0 +1,11 @@
+{
+  "type": "normal",
+  "fileName": "profile-terrenoss.svg",
+  "backgroundColor": "#0A0A0C",
+  "foregroundColor": "#F0E6D2",
+  "strongColor": "#C8AA6E",
+  "weakColor": "#8F877A",
+  "radarColor": "#D3202C",
+  "growingAnimation": true,
+  "contribColors": ["#1A1A1F", "#5C4624", "#8E6E37", "#C8AA6E", "#D3202C"]
+}
