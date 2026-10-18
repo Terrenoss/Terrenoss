@@ -1,36 +1,7 @@
 <div align="center">
 
-<!-- HEADER & TITRE -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=000000,670C0C,D4AF37,000000&height=250&section=header&text=Terrenoss&fontSize=70&fontAlign=50&fontAlignY=35&animation=fadeIn&fontColor=ffffff&desc=Full%20Stack%20%7C%20C%23%20.NET%20%7C%20TypeScript%20%7C%20Next.js&descAlign=50&descAlignY=85" alt="Terrenoss, développeur Full Stack : C# .NET, TypeScript, Next.js" />
-
-<!-- TYPING ANIMATION -->
-<a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Cinzel&weight=600&size=25&duration=3000&pause=1000&color=D4AF37&center=true&vCenter=true&width=435&lines=D%C3%A9veloppeur+Full+Stack;C%23+.NET+%7C+TypeScript+%7C+Next.js;Jeux+vid%C3%A9o+sous+Unity;Outils+%26+apps+autour+de+League+of+Legends;Bienvenue+dans+l'ar%C3%A8ne..." alt="Développeur Full Stack. C# .NET, TypeScript, Next.js. Jeux vidéo sous Unity. Outils et apps autour de League of Legends." />
-</a>
-
-<!-- SÉPARATEUR -->
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="" />
-
-<!-- À PROPOS -->
-### À propos
-
-Développeur full-stack basé en France. Je construis des applications
-desktop (**C# / .NET / Avalonia / Electron**) et web (**Next.js / TypeScript**),
-des jeux sous **Unity**, seul ou en équipe, avec un faible assumé pour
-l'écosystème **League of Legends**.
-
-> *"Codeur par passion."*
-
----
-
-<!-- STACK TECHNIQUE -->
-### Arsenal & Grimoire
-
-<img src="https://skillicons.dev/icons?i=cs,dotnet,unity,cpp,ts,react,nextjs,nodejs,electron,py,postgres,redis,docker,git&perline=7" alt="C#, .NET, Unity, C++, TypeScript, React, Next.js, Node.js, Electron, Python, PostgreSQL, Redis, Docker, Git" />
-
-<sub>C# · .NET · Avalonia · Unity · C++ · TypeScript · React · Next.js · Node.js · Electron · Python · PostgreSQL · Redis · Docker · Git</sub>
-
----
+<!-- BANNIÈRE (générée par cards/build.py) -->
+<img src="assets/banniere.svg" width="100%" alt="Terrenoss, développeur full-stack et game dev en France : apps desktop et web pour les joueurs de League of Legends, et jeux vidéo sous Unity, seul ou en équipe. Stack : C#, .NET, Unity, TypeScript, Next.js, Electron." />
 
 <!-- PROJETS PHARES (cartes générées par cards/build.py) -->
 ### Projets phares
@@ -40,7 +11,7 @@ l'écosystème **League of Legends**.
 <img src="assets/projet-widgetforge.svg" width="390" alt="WidgetForge, moteur de widgets (code privé) : widgets de profil Discord dynamiques, connecteurs LoL, Steam et Spotify, scheduler et rendu de visuels animés. TypeScript, Redis." />
 <a href="https://github.com/Terrenoss/Mimic-Reborn"><img src="assets/projet-mimic-reborn.svg" width="390" alt="Mimic Reborn, fork modernisé et open source : le client League sur ton téléphone, du lobby à la sélection des champions, en LAN direct chiffré de bout en bout. .NET 9, React, TypeScript." /></a>
 
-Aussi sur l'établi : **[Strivea](https://github.com/Terrenoss/Strivea)** (app desktop Avalonia) · **[Stats-Of-Legends](https://github.com/Terrenoss/Stats-Of-Legends)** (web Next.js)
+Aussi sur l'établi : **[Stats-Of-Legends](https://github.com/Terrenoss/Stats-Of-Legends)** (web Next.js)
 
 ---
 
@@ -52,6 +23,15 @@ Aussi sur l'établi : **[Strivea](https://github.com/Terrenoss/Strivea)** (app d
 <a href="https://github.com/The-Turkeys-Men/TurkeyShowdown"><img src="assets/jeu-turkeyshowdown.svg" width="100%" alt="TurkeyShowdown, arène multijoueur en ligne (projet d'équipe, 2025) : deathmatch en vue du dessus entre dindons armés, avec armes, grappin, objets et plusieurs maps. Mon rôle : modes de jeu, kill feed et classement synchronisés en réseau. Unity 6, C#, Netcode for GameObjects." /></a>
 
 <img src="assets/jeux-unity.svg" width="100%" alt="Aussi sur Unity : Super Meat Boy (remake, plateforme 2D), World of Goo (remake, structures physiques), Zelda-like (quêtes, inventaire, sauvegarde), Factorio-like (convoyeurs, inserteurs, production), ShroomWitch Garden (god game en équipe), Tower Defense (codé depuis un diagramme UML)." />
+
+---
+
+<!-- STACK TECHNIQUE -->
+### Arsenal & Grimoire
+
+<img src="https://skillicons.dev/icons?i=cs,dotnet,unity,cpp,ts,react,nextjs,nodejs,electron,py,postgres,redis,docker,git&perline=7" alt="C#, .NET, Unity, C++, TypeScript, React, Next.js, Node.js, Electron, Python, PostgreSQL, Redis, Docker, Git" />
+
+<sub>C# · .NET · Avalonia · Unity · C++ · TypeScript · React · Next.js · Node.js · Electron · Python · PostgreSQL · Redis · Docker · Git</sub>
 
 ---
 
@@ -69,10 +49,5 @@ Aussi sur l'établi : **[Strivea](https://github.com/Terrenoss/Strivea)** (app d
 <p align="center">
   <img src="https://github.com/Terrenoss/Terrenoss/blob/main/profile-3d-contrib/profile-night-rainbow.svg" alt="Contributions GitHub de l'année représentées en ville 3D" width="100%" />
 </p>
-
-<br/>
-
-<!-- FOOTER -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=000000,670C0C&height=100&section=footer" alt="" />
 
 </div>

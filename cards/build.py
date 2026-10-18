@@ -8,6 +8,7 @@ réduites aux seuls caractères utilisés par chaque carte.
 """
 import base64
 import io
+import math
 from dataclasses import dataclass, field
 from html import escape
 from pathlib import Path
@@ -347,6 +348,51 @@ def strip(title, items):
 
 NB = " "  # espace insécable avant les deux-points
 
+def banner():
+    svg = Svg(860, 250, "Terrenoss",
+              "Développeur full-stack et game dev, en France. Apps desktop et web pour les joueurs de "
+              "League of Legends, et jeux vidéo sous Unity, seul ou en équipe. "
+              "Stack : C#, .NET, Unity, TypeScript, Next.js, Electron.")
+    frame(svg)
+    cx, cy = 712, 125
+    ticks = 2 * math.pi * 88 / 72  # 72 graduations pile sur la circonférence, sans raccord visible
+    svg.defs.append(
+        f'<radialGradient id="halo"><stop offset="0" stop-color="{WINE}" stop-opacity=".75"/>'
+        f'<stop offset="1" stop-color="{WINE}" stop-opacity="0"/></radialGradient>'
+        "<style>.spin{transform-box:fill-box;transform-origin:center;animation:spin 90s linear infinite}"
+        "@keyframes spin{to{transform:rotate(360deg)}}"
+        "@media (prefers-reduced-motion:reduce){.spin{animation:none}}</style>"
+    )
+
+    # Emblème : halo, anneau gradué qui tourne, étoile à huit branches, monogramme.
+    d, s = 68, 48
+    svg.add(f'<circle cx="{cx}" cy="{cy}" r="122" fill="url(#halo)"/>')
+    svg.add(f'<circle cx="{cx}" cy="{cy}" r="97" fill="none" stroke="{GOLD}" stroke-opacity=".22"/>')
+    svg.add(f'<circle class="spin" cx="{cx}" cy="{cy}" r="88" fill="none" stroke="{GOLD}" stroke-opacity=".6" '
+            f'stroke-width="5" stroke-dasharray="1.4 {ticks - 1.4:.3f}"/>')
+    svg.add(f'<path d="M{cx} {cy - d}L{cx + d} {cy}L{cx} {cy + d}L{cx - d} {cy}Z'
+            f'M{cx - s} {cy - s}H{cx + s}V{cy + s}H{cx - s}Z" fill="none" stroke="{GOLD}" '
+            f'stroke-opacity=".45" stroke-linejoin="round"/>')
+    svg.add(f'<circle cx="{cx}" cy="{cy}" r="40" fill="{WINE}" fill-opacity=".45" stroke="{GOLD}" '
+            f'stroke-opacity=".6"/>')
+    svg.text(cx, cy + 16, "T", SERIF, 46, "url(#gold)", anchor="middle")
+
+    x, limit = 44, cx - 110
+    eyebrow = "DÉVELOPPEUR FULL-STACK · GAME DEV · FRANCE"
+    check("bannière : sur-titre", x + SANS_SB.width(eyebrow, 11, 2.6), limit)
+    svg.text(x, 64, eyebrow, SANS_SB, 11, GOLD_SOFT, spacing=2.6)
+    check("bannière : nom", x + SERIF.width("Terrenoss", 60), limit)
+    svg.text(x - 2, 122, "Terrenoss", SERIF, 60, "url(#gold)")
+    for i, line in enumerate(["Apps desktop & web pour les joueurs de League of Legends,",
+                              "et jeux vidéo sous Unity, seul ou en équipe."]):
+        check("bannière : accroche", x + SANS.width(line, 15.5), limit)
+        svg.text(x, 156 + i * 22, line, SANS, 15.5, INK, opacity=0.9)
+    check("bannière : stack", pills(svg, x, 198, ["C#", ".NET", "Unity", "TypeScript", "Next.js", "Electron"]),
+          limit)
+    border(svg)
+    return svg
+
+
 PROJECTS = [
     Project("porotalk", "PoroTalk", "App desktop",
             f"Chat vocal éphémère pour League of Legends{NB}: connexion automatique avec tes coéquipiers, "
@@ -399,6 +445,7 @@ def main():
     cards = {f"projet-{p.slug}.svg": project_card(p) for p in PROJECTS}
     cards |= {f"jeu-{g.slug}.svg": game_card(g) for g in GAMES}
     cards["jeux-unity.svg"] = strip("Aussi sur Unity", SMALL_GAMES)
+    cards["banniere.svg"] = banner()
     for name, svg in cards.items():
         (OUT / name).write_text(svg.render(), encoding="utf-8")
         print(f"{name:28} {(OUT / name).stat().st_size / 1024:6.1f} Ko")
