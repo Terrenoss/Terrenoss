@@ -1,6 +1,9 @@
 """Génère les visuels SVG du README dans assets/.
 
-Usage : python cards/build.py   (dépendance : pip install fonttools)
+Usage : python cards/build.py [fichier.svg ...]   (dépendance : pip install fonttools)
+La carte de série (streak.svg) interroge l'API GitHub : il faut GITHUB_TOKEN, par
+exemple GITHUB_TOKEN=$(gh auth token) python cards/build.py. Le workflow
+profile-3d.yml la régénère chaque jour.
 
 GitHub affiche les SVG du README comme des <img> : ils ne peuvent charger ni
 police ni image externe. Tout est donc intégré en base64, et les polices sont
@@ -16,8 +19,12 @@ import base64
 import io
 import json
 import math
+import os
 import random
+import sys
+import urllib.request
 from dataclasses import dataclass, field
+from datetime import date, datetime, timedelta, timezone
 from html import escape
 from pathlib import Path
 from typing import Callable
@@ -64,7 +71,7 @@ class Font:
         opts = subset.Options()
         opts.flavor = "woff"
         opts.layout_features = ["kern", "liga"]
-        tt = TTFont(self.path)
+        tt = TTFont(self.path, recalcTimestamp=False)  # sinon chaque génération change tous les SVG
         sub = subset.Subsetter(opts)
         sub.populate(text="".join(sorted(chars)) + " ")
         sub.subset(tt)
@@ -223,6 +230,23 @@ def embers(svg, n, spots, y0, rise, seed):
             f'style="animation-duration:{dur:.1f}s;animation-delay:{-rng.uniform(0, dur):.1f}s"/>')
     dots = "".join(dots)
     svg.add(f'<g clip-path="url(#card)" filter="url(#spark)">{dots}</g>')
+
+
+FLAME_CSS = ("@keyframes flame{0%,100%{transform:scale(1,1) skewX(0)}30%{transform:scale(.92,1.12) skewX(3deg)}"
+             "65%{transform:scale(1.05,.9) skewX(-3deg)}}"
+             ".flame{transform-box:fill-box;transform-origin:50% 100%;animation:flame 1s ease-in-out infinite}")
+
+
+def flames(cx, ground, tongues):
+    # Langues de feu (dx, hauteur, largeur, couleur, durée) qui vacillent depuis leur base.
+    out = []
+    for dx, fh, fw, color, dur in tongues:
+        x = cx + dx
+        d = (f"M{x:g} {ground:g}C{x - fw:g} {ground - fh * .3:g} {x - fw * .35:g} {ground - fh * .7:g} "
+             f"{x:g} {ground - fh:g}C{x + fw * .35:g} {ground - fh * .7:g} {x + fw:g} {ground - fh * .3:g} "
+             f"{x:g} {ground:g}Z")
+        out.append(f'<path class="flame" d="{d}" fill="{color}" fill-opacity=".92" style="animation-duration:{dur}s"/>')
+    return "".join(out)
 
 
 def pill_width(label, size=11, pad=11):
@@ -697,9 +721,12 @@ def arsenal(groups):
     return svg
 
 
-def heading(title):
+def heading(title, index):
     svg = Svg(640, 64, title, title)
     w, cy, size, spacing = svg.w, 34, 24, 7
+    svg.defs.append('<filter id="glint" x="-300%" y="-300%" width="700%" height="700%">'
+                    '<feGaussianBlur stdDeviation="1.6" result="b"/>'
+                    '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>')
     tw = SERIF_BLACK.width(title, size, spacing) - spacing
     # letter-spacing ajoute un blanc après la dernière lettre : on recentre d'une demi-chasse.
     svg.text(w / 2 + spacing / 2, cy + 8.5, title, SERIF_BLACK, size, GOLD, spacing=spacing, anchor="middle",
@@ -715,9 +742,18 @@ def heading(title):
         svg.add(f'<path d="M{a:g} {cy}H{b:g}" stroke="url(#{side})"/>')
         svg.add(diamond(b - sign * 10, cy, 2.5, GOLD))
         svg.add(aeonia(w / 2 + sign * flower, cy, f"bloom {side}"))
+        # Étincelle qui part de la fleur et file le long du filet ; décalée d'un titre à l'autre.
+        svg.add(f'<circle class="spark {side}" cx="{a:g}" cy="{cy}" r="1.8" fill="#FFF4D6" filter="url(#glint)" '
+                f'style="animation-delay:{index * 1.5:g}s"/>')
+    run = outer - inner - 14
     svg.css.append("@keyframes spin{to{transform:rotate(360deg)}}"
                    ".bloom{transform-box:fill-box;transform-origin:center;animation:spin 40s linear infinite}"
-                   ".r{animation-direction:reverse}"
+                   ".bloom.r{animation-direction:reverse}"
+                   + "".join(f"@keyframes spark-{side}{{0%{{transform:translateX(0);opacity:0}}5%{{opacity:1}}"
+                             f"38%{{transform:translateX({sign * run:.0f}px);opacity:0}}100%{{opacity:0}}}}"
+                             for side, sign in (("l", -1), ("r", 1)))
+                   + ".spark{opacity:0;animation:6s cubic-bezier(.3,0,.2,1) infinite}"
+                   ".spark.l{animation-name:spark-l}.spark.r{animation-name:spark-r}"
                    # Titre sans cadre : sur le thème clair de GitHub, l'or clair manquerait de contraste.
                    "@media (prefers-color-scheme:light){.t{fill:#785A28}}")
     return svg
@@ -835,10 +871,7 @@ def footer():
     )
     svg.css.append(
         "@keyframes flicker{0%{opacity:.7}40%{opacity:1}70%{opacity:.82}100%{opacity:.95}}"
-        ".fire{animation:flicker 2.4s ease-in-out infinite alternate}"
-        "@keyframes flame{0%,100%{transform:scale(1,1) skewX(0)}30%{transform:scale(.92,1.12) skewX(3deg)}"
-        "65%{transform:scale(1.05,.9) skewX(-3deg)}}"
-        ".flame{transform-box:fill-box;transform-origin:50% 100%;animation:flame 1s ease-in-out infinite}"
+        ".fire{animation:flicker 2.4s ease-in-out infinite alternate}" + FLAME_CSS +
         "@keyframes lit{0%{opacity:0}12%,82%{opacity:1}96%,100%{opacity:0}}.lit{animation:lit 10s ease-in-out infinite}"
     )
     svg.add(f'<ellipse class="fire" cx="{cx:g}" cy="{ground - 8}" rx="80" ry="46" fill="url(#hearth)"/>')
@@ -853,12 +886,8 @@ def footer():
             f'<rect x="{cx - 11:g}" y="{ground - 62}" width="22" height="4" rx="1" fill="{GOLD}"/>'
             f'<rect x="{cx - 1.6:g}" y="{ground - 74}" width="3.2" height="12" fill="#6E5630"/>'
             f'<circle cx="{cx:g}" cy="{ground - 76}" r="3" fill="{GOLD}"/>{coil}</g>')
-    for dx, fh, fw, color, dur in ((-13, 22, 9, RED, 1.3), (12, 26, 10, RED, 1.1), (-5, 34, 10, EMBER, .9),
-                                   (6, 30, 8, EMBER, 1.2), (0, 20, 6, "#FFD58A", .8)):
-        x = cx + dx
-        d = (f"M{x:g} {ground}C{x - fw:g} {ground - fh * .3:g} {x - fw * .35:g} {ground - fh * .7:g} "
-             f"{x:g} {ground - fh}C{x + fw * .35:g} {ground - fh * .7:g} {x + fw:g} {ground - fh * .3:g} {x:g} {ground}Z")
-        svg.add(f'<path class="flame" d="{d}" fill="{color}" fill-opacity=".92" style="animation-duration:{dur}s"/>')
+    svg.add(flames(cx, ground, ((-13, 22, 9, RED, 1.3), (12, 26, 10, RED, 1.1), (-5, 34, 10, EMBER, .9),
+                                (6, 30, 8, EMBER, 1.2), (0, 20, 6, "#FFD58A", .8))))
     embers(svg, 14, [(cx - 22, cx + 22)], ground - 16, 90, 11)
 
     band_y, band_h = 118, 44
@@ -876,6 +905,114 @@ def footer():
 
 
 NB = " "  # espace insécable avant les deux-points
+
+MONTHS = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."]
+
+
+def fr_date(d, year=False):
+    return f"{d.day} {MONTHS[d.month - 1]}" + (f" {d.year}" if year else "")
+
+
+def contributions(login="Terrenoss"):
+    # Calendrier complet depuis la création du compte ; l'API limite chaque collection à un an.
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        return None
+
+    def user(fields):
+        query = json.dumps({"query": f'{{user(login:"{login}"){{{fields}}}}}'}).encode()
+        req = urllib.request.Request("https://api.github.com/graphql", data=query,
+                                     headers={"Authorization": f"bearer {token}"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.load(resp)
+        if "errors" in data:
+            raise RuntimeError(data["errors"])
+        return data["data"]["user"]
+
+    created = date.fromisoformat(user("createdAt")["createdAt"][:10])
+    today = datetime.now(timezone.utc).date()
+    years = "".join(
+        f'y{y}:contributionsCollection(from:"{max(created, date(y, 1, 1))}T00:00:00Z",'
+        f'to:"{min(today, date(y, 12, 31))}T23:59:59Z")'
+        "{contributionCalendar{weeks{contributionDays{date contributionCount}}}}"
+        for y in range(created.year, today.year + 1))
+    days = {date.fromisoformat(d["date"]): d["contributionCount"]
+            for c in user(years).values() for w in c["contributionCalendar"]["weeks"] for d in w["contributionDays"]}
+    return created, today, days
+
+
+def streaks(days, today):
+    # (longueur, début, fin) de la série en cours et du record. Aujourd'hui à zéro ne casse pas encore la série.
+    best, run, start = (0, None, None), 0, None
+    for d in sorted(days):
+        if days[d]:
+            start = d if run == 0 else start
+            run += 1
+            if run > best[0]:
+                best = (run, start, d)
+        else:
+            run = 0
+    end = today if days.get(today) else today - timedelta(1)
+    first, current = end, 0
+    while days.get(first):
+        current += 1
+        first -= timedelta(1)
+    return (current, first + timedelta(1), end), best
+
+
+def streak_card():
+    data = contributions()
+    if data is None:
+        return None
+    created, today, days = data
+    total = sum(days.values())
+    (cur, cur_start, cur_end), (best, best_start, best_end) = streaks(days, today)
+
+    def span(n, a, b):
+        if not n:
+            return "—"
+        year = a.year != today.year
+        return fr_date(a, year) if a == b else f"{fr_date(a, year)} – {fr_date(b, year)}"
+
+    svg = Svg(860, 200, "Activité GitHub",
+              f"{total} contributions depuis le {fr_date(created, True)}. Série en cours : {cur} jours, "
+              f"l'arc rouge montre la progression vers le record. Plus longue série : {best} jours.")
+    frame(svg)
+    cx, cy, r = 430, 86, 44
+    ticks = 2 * math.pi * 56 / 60
+    progress = min(cur / best, 1) * 100 if best else 0
+    svg.css.append(
+        "@keyframes spin{to{transform:rotate(360deg)}}"
+        f".ring{{transform-box:view-box;transform-origin:{cx}px {cy}px;animation:spin 90s linear infinite}}"
+        "@keyframes arc{from{stroke-dasharray:0 100}}"
+        ".arc{animation:arc 1.8s cubic-bezier(.2,.8,.2,1) .3s backwards}" + FLAME_CSS)
+    for x in (290, 570):
+        svg.add(f'<path d="M{x} 40V164" stroke="{GOLD}" stroke-opacity=".15"/>')
+    for x, value, label, dates in ((150, total, "Contributions au total", f"depuis le {fr_date(created, True)}"),
+                                   (710, best, "Plus longue série", span(best, best_start, best_end))):
+        svg.text(x, 106, f"{value:,}".replace(",", NB), SERIF_BLACK, 40, GOLD, anchor="middle")
+        svg.text(x, 160, label, SANS_SB, 12.5, TEXT, anchor="middle")
+        svg.text(x, 180, dates, SANS, 11.5, MUTED, anchor="middle")
+
+    # Série en cours : anneau gradué, arc rouge = progression vers le record, flamme posée dessus.
+    svg.add(f'<circle class="ring" cx="{cx}" cy="{cy}" r="56" fill="none" stroke="{GOLD}" stroke-opacity=".45" '
+            f'stroke-width="5" stroke-dasharray="1.2 {ticks - 1.2:.3f}"/>')
+    svg.add(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{BLACK}" fill-opacity=".6" stroke="{GOLD}" '
+            f'stroke-opacity=".2" stroke-width="4"/>')
+    svg.add(f'<circle class="arc" cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{RED}" stroke-width="4" '
+            f'stroke-linecap="round" pathLength="100" stroke-dasharray="{progress:.1f} 100" '
+            f'transform="rotate(-90 {cx} {cy})"/>')
+    svg.text(cx, cy + 14, str(cur), SERIF_BLACK, 40, WHITE, anchor="middle")
+    top = cy - r
+    svg.add(f'<ellipse cx="{cx}" cy="{top}" rx="12" ry="9" fill="{BLACK}"/>')
+    svg.add(flames(cx, top + 6, ((-5, 16, 6, RED, 1.2), (5, 18, 6, RED, 1), (0, 24, 7, EMBER, .9),
+                                 (0, 13, 4, "#FFD58A", .8))))
+    embers(svg, 8, [(cx - 8, cx + 8)], top - 14, 60, 5)
+    svg.text(cx, 160, "Série en cours", SANS_SB, 12.5, TEXT, anchor="middle")
+    svg.text(cx, 180, span(cur, cur_start, cur_end), SANS, 11.5, MUTED, anchor="middle")
+    border(svg)
+    return svg
+
 
 HEADINGS = {"projets": "PROJETS", "game-dev": "GAME DEV", "arsenal": "ARSENAL", "activite": "ACTIVITÉ"}
 
@@ -938,17 +1075,23 @@ SMALL_GAMES = [
 ]
 
 
-def main():
+def main(names):
+    builders = {"banniere.svg": banner, "arsenal.svg": lambda: arsenal(STACK), "footer.svg": footer,
+                "streak.svg": streak_card}
+    builders |= {f"titre-{slug}.svg": (lambda t=title, i=i: heading(t, i))
+                 for i, (slug, title) in enumerate(HEADINGS.items())}
+    builders |= {f"projet-{p.slug}.svg": (lambda p=p: project_card(p)) for p in PROJECTS}
+    builders |= {f"jeu-{g.slug}.svg": (lambda g=g: game_card(g)) for g in GAMES}
+    builders["jeux-unity.svg"] = lambda: strip("Aussi sur Unity", SMALL_GAMES)
     OUT.mkdir(exist_ok=True)
-    cards = {"banniere.svg": banner(), "arsenal.svg": arsenal(STACK), "footer.svg": footer()}
-    cards |= {f"titre-{slug}.svg": heading(title) for slug, title in HEADINGS.items()}
-    cards |= {f"projet-{p.slug}.svg": project_card(p) for p in PROJECTS}
-    cards |= {f"jeu-{g.slug}.svg": game_card(g) for g in GAMES}
-    cards["jeux-unity.svg"] = strip("Aussi sur Unity", SMALL_GAMES)
-    for name, svg in cards.items():
+    for name in names or builders:
+        svg = builders[name]()
+        if svg is None:
+            print(f"{name:28} ignoré : GITHUB_TOKEN absent")
+            continue
         (OUT / name).write_text(svg.render(), encoding="utf-8")
         print(f"{name:28} {(OUT / name).stat().st_size / 1024:6.1f} Ko")
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

@@ -16,6 +16,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
           SETTING_JSON: .github/profile-3d.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Carte de série
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install fonttools==4.63.0
+          python cards/build.py streak.svg
       - name: Commit & Push
         run: |
           git config user.name github-actions

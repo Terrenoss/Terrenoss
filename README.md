@@ -26,7 +26,7 @@ Aussi sur l'établi : **[Stats-Of-Legends](https://github.com/Terrenoss/Stats-Of
 
 ### <img src="assets/titre-activite.svg" width="640" alt="Activité" />
 
-<a href="https://github.com/Terrenoss"><img src="https://streak-stats.demolab.com/?user=Terrenoss&locale=fr&hide_border=true&background=0A0A0C&stroke=3A2F1C&ring=C8AA6E&fire=D3202C&currStreakNum=F0E6D2&sideNums=F0E6D2&currStreakLabel=C8AA6E&sideLabels=C8AA6E&dates=8F877A" alt="Série de contributions GitHub de Terrenoss" /></a>
+<img src="assets/streak.svg" width="100%" alt="Contributions GitHub de Terrenoss : total depuis 2020, série en cours et plus longue série (mise à jour chaque jour)." />
 
 <br/><br/>
 
