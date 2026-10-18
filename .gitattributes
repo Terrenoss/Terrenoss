@@ -1,0 +1,2 @@
+# Le script qui génère les visuels ne doit pas compter comme du Python dans les stats de langages.
+*.py linguist-vendored

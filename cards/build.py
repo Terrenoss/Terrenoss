@@ -906,6 +906,18 @@ def footer():
 
 NB = " "  # espace insécable avant les deux-points
 
+def contact_button(label):
+    # Bouton à bouts en pointe ; fond noir pour rester lisible sur le thème clair de GitHub.
+    size, spacing, pad, h = 12, 2.2, 24, 44
+    w = round(SANS_SB.width(label, size, spacing) - spacing + 2 * pad + 20)
+    svg = Svg(w, h, label, label)
+    svg.add(f'<path d="{tag_shape(.5, .5, w - 1, h - 1, 12)}" fill="{BLACK}" stroke="{GOLD}" stroke-opacity=".7"/>')
+    svg.text(pad, h / 2 + size * .36, label, SANS_SB, size, WHITE, spacing=spacing)
+    svg.add(f'<path transform="translate({w - pad - 8} {h / 2 - 4:g})" d="M0 8L8 0M2.5 0H8V5.5" fill="none" '
+            f'stroke="{GOLD}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>')
+    return svg
+
+
 MONTHS = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."]
 
 
@@ -1077,7 +1089,7 @@ SMALL_GAMES = [
 
 def main(names):
     builders = {"banniere.svg": banner, "arsenal.svg": lambda: arsenal(STACK), "footer.svg": footer,
-                "streak.svg": streak_card}
+                "streak.svg": streak_card, "contact.svg": lambda: contact_button("ME CONTACTER SUR LINKEDIN")}
     builders |= {f"titre-{slug}.svg": (lambda t=title, i=i: heading(t, i))
                  for i, (slug, title) in enumerate(HEADINGS.items())}
     builders |= {f"projet-{p.slug}.svg": (lambda p=p: project_card(p)) for p in PROJECTS}

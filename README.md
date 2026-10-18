@@ -3,14 +3,14 @@
 <!-- Tous les visuels de assets/ sont générés par cards/build.py -->
 <img src="assets/banniere.svg" width="100%" alt="Terrenoss, développeur full-stack et game dev en France : apps pour les joueurs de League of Legends, jeux sous Unity. Stack : C#, .NET, Unity, TypeScript, Next.js, Electron." />
 
+<a href="https://www.linkedin.com/in/ethan-lesage-ab49833a8/"><img src="assets/contact.svg" height="44" alt="Me contacter sur LinkedIn" /></a>
+
 ### <img src="assets/titre-projets.svg" width="640" alt="Projets" />
 
 <img src="assets/projet-porotalk.svg" width="390" alt="PoroTalk, app desktop (code privé) : chat vocal éphémère pour League of Legends, connexion automatique avec tes coéquipiers en WebRTC P2P, sans lien à partager. Electron, TypeScript, WebRTC." />
 <a href="https://rift.ddns.net"><img src="assets/projet-cashback.svg" width="390" alt="CashBack, bot Discord et site web (code privé) : paris en fausse monnaie sur les games de tes amis, et Rift, un site de stats façon op.gg sur rift.ddns.net. TypeScript, Next.js, Prisma." /></a>
 <img src="assets/projet-widgetforge.svg" width="390" alt="WidgetForge, moteur de widgets (code privé) : widgets de profil Discord dynamiques, connecteurs LoL, Steam et Spotify, scheduler et rendu de visuels animés. TypeScript, Redis." />
 <a href="https://github.com/Terrenoss/Mimic-Reborn"><img src="assets/projet-mimic-reborn.svg" width="390" alt="Mimic Reborn, fork modernisé et open source : le client League sur ton téléphone, du lobby à la sélection des champions, en LAN direct chiffré de bout en bout. .NET 9, React, TypeScript." /></a>
-
-Aussi sur l'établi : **[Stats-Of-Legends](https://github.com/Terrenoss/Stats-Of-Legends)** (web Next.js)
 
 ### <img src="assets/titre-game-dev.svg" width="640" alt="Game dev" />
 
