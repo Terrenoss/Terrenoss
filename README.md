@@ -32,4 +32,8 @@ Aussi sur l'établi : **[Stats-Of-Legends](https://github.com/Terrenoss/Stats-Of
 
 <img src="profile-3d-contrib/profile-terrenoss.svg" width="100%" alt="Contributions GitHub de l'année représentées en ville 3D" />
 
+<br/><br/>
+
+<img src="assets/footer.svg" width="100%" alt="Feu de camp de Dark Souls et message BONFIRE LIT : merci d'être passé, repose-toi au feu avant de reprendre la route." />
+
 </div>
