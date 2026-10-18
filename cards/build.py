@@ -759,54 +759,37 @@ def heading(title, index):
     return svg
 
 
-def banner():
-    w, h = 860, 280
-    svg = Svg(w, h, "Terrenoss",
-              "Développeur full-stack et game dev, en France. Apps pour les joueurs de League of Legends, "
-              "jeux sous Unity. Stack : C#, .NET, Unity, TypeScript, Next.js, Electron.")
-    frame(svg)
-    cx, cy = 716, 132
-    ticks = 2 * math.pi * 96 / 72  # 72 graduations pile sur la circonférence, sans raccord visible
+def metal(svg):
+    # Or métallique de l'écran VICTORY, réservé au nom ; ombre portée pour le détacher du fond.
     svg.defs.append(
-        f'<radialGradient id="fire" cx=".83" cy="1.08" r=".55">'
-        f'<stop offset="0" stop-color="{RED}" stop-opacity=".5"/>'
-        f'<stop offset=".5" stop-color="{RED}" stop-opacity=".12"/>'
-        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
-        f'<radialGradient id="wisp"><stop offset="0" stop-color="#FFF6E4"/>'
-        f'<stop offset=".35" stop-color="{EMBER}" stop-opacity=".75"/>'
-        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
-        f'<radialGradient id="moon" cx=".35" cy=".4"><stop offset="0" stop-color="#FFFFFF"/>'
-        f'<stop offset="1" stop-color="{WHITE}"/></radialGradient>'
-        f'<mask id="crescent"><rect width="{w}" height="{h}" fill="#FFF"/>'
-        f'<circle cx="{cx + 15}" cy="{cy - 10}" r="35" fill="#000"/></mask>'
-        '<filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>'
         '<filter id="lift" x="-5%" y="-20%" width="110%" height="150%">'
         '<feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#000" flood-opacity=".9"/></filter>'
         '<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">'
         '<stop offset="0" stop-color="#FFF7E2"/><stop offset=".42" stop-color="#EED394"/>'
         f'<stop offset=".6" stop-color="{GOLD}"/><stop offset=".85" stop-color="#8A672C"/>'
         '<stop offset="1" stop-color="#C9AA6A"/></linearGradient>'
-        '<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">'
-        '<stop offset="0" stop-color="#FFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFF" stop-opacity=".8"/>'
-        '<stop offset="1" stop-color="#FFF" stop-opacity="0"/></linearGradient>'
+    )
+
+
+def emblem(svg, cx, cy):
+    # Anneau gradué, lune de Ranni, feu-renard d'Ahri en orbite.
+    ticks = 2 * math.pi * 96 / 72  # 72 graduations pile sur la circonférence, sans raccord visible
+    svg.defs.append(
+        f'<radialGradient id="wisp"><stop offset="0" stop-color="#FFF6E4"/>'
+        f'<stop offset=".35" stop-color="{EMBER}" stop-opacity=".75"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
+        f'<radialGradient id="moon" cx=".35" cy=".4"><stop offset="0" stop-color="#FFFFFF"/>'
+        f'<stop offset="1" stop-color="{WHITE}"/></radialGradient>'
+        f'<mask id="crescent"><rect width="{svg.w}" height="{svg.h}" fill="#FFF"/>'
+        f'<circle cx="{cx + 15}" cy="{cy - 10}" r="35" fill="#000"/></mask>'
+        '<filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>'
     )
     svg.css.append(
-        "@keyframes spin{to{transform:rotate(360deg)}}"
-        "@keyframes flicker{0%{opacity:.7}40%{opacity:1}70%{opacity:.82}100%{opacity:.95}}"
-        "@keyframes breathe{50%{opacity:.35}}"
-        "@keyframes sweep{0%{transform:translateX(0)}30%,100%{transform:translateX(720px)}}"
+        "@keyframes spin{to{transform:rotate(360deg)}}@keyframes breathe{50%{opacity:.35}}"
         f".ring,.orbit{{transform-box:view-box;transform-origin:{cx}px {cy}px}}"
         ".ring{animation:spin 120s linear infinite}.orbit{animation:spin 9s linear infinite}"
-        ".fire{animation:flicker 3.2s ease-in-out infinite alternate}"
         ".halo{animation:breathe 6s ease-in-out infinite}"
-        ".sweep{animation:sweep 9s cubic-bezier(.45,0,.25,1) 1s infinite}"
     )
-
-    # Feu de camp : lueur qui vacille et braises qui montent.
-    svg.add(f'<rect class="fire" width="{w}" height="{h}" fill="url(#fire)" clip-path="url(#card)"/>')
-    embers(svg, 26, [(590, 840)] * 3 + [(24, 590)] * 2, h, 240, 7)
-
-    # Emblème : anneau gradué, lune de Ranni, feu-renard d'Ahri en orbite.
     svg.add(f'<circle cx="{cx}" cy="{cy}" r="104" fill="none" stroke="{GOLD}" stroke-opacity=".25"/>')
     svg.add(f'<circle class="ring" cx="{cx}" cy="{cy}" r="96" fill="none" stroke="{GOLD}" stroke-opacity=".5" '
             f'stroke-width="6" stroke-dasharray="1.2 {ticks - 1.2:.3f}"/>')
@@ -830,6 +813,36 @@ def banner():
     orbs = "".join(orbs)
     svg.add(f'<g class="orbit">{orbs}</g>')
 
+
+def banner():
+    w, h = 860, 280
+    svg = Svg(w, h, "Terrenoss",
+              "Développeur full-stack et game dev, en France. Apps pour les joueurs de League of Legends, "
+              "jeux sous Unity. Stack : C#, .NET, Unity, TypeScript, Next.js, Electron.")
+    frame(svg)
+    cx, cy = 716, 132
+    metal(svg)
+    svg.defs.append(
+        f'<radialGradient id="fire" cx=".83" cy="1.08" r=".55">'
+        f'<stop offset="0" stop-color="{RED}" stop-opacity=".5"/>'
+        f'<stop offset=".5" stop-color="{RED}" stop-opacity=".12"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
+        '<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">'
+        '<stop offset="0" stop-color="#FFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFF" stop-opacity=".8"/>'
+        '<stop offset="1" stop-color="#FFF" stop-opacity="0"/></linearGradient>'
+    )
+    svg.css.append(
+        "@keyframes flicker{0%{opacity:.7}40%{opacity:1}70%{opacity:.82}100%{opacity:.95}}"
+        "@keyframes sweep{0%{transform:translateX(0)}30%,100%{transform:translateX(720px)}}"
+        ".fire{animation:flicker 3.2s ease-in-out infinite alternate}"
+        ".sweep{animation:sweep 9s cubic-bezier(.45,0,.25,1) 1s infinite}"
+    )
+
+    # Feu de camp : lueur qui vacille et braises qui montent.
+    svg.add(f'<rect class="fire" width="{w}" height="{h}" fill="url(#fire)" clip-path="url(#card)"/>')
+    embers(svg, 26, [(590, 840)] * 3 + [(24, 590)] * 2, h, 240, 7)
+    emblem(svg, cx, cy)
+
     # Nom en or métallique (écran VICTORY), avec un reflet qui passe de temps en temps.
     x, limit = 48, cx - 116
     name = "Terrenoss"
@@ -847,6 +860,34 @@ def banner():
     check("bannière : stack", pills(svg, x, 226, ["C#", ".NET", "Unity", "TypeScript", "Next.js", "Electron"]),
           limit)
     border(svg)
+    return svg
+
+
+def linkedin_banner():
+    # Bannière LinkedIn (1584 x 396), exportée en PNG. La photo de profil couvre le bas gauche : tout est à droite.
+    w, h = 1584, 396
+    svg = Svg(w, h, "Développeur gameplay", "Développeur gameplay : Unity, C#, Unreal Engine, multijoueur. "
+                                            "github.com/Terrenoss")
+    svg.defs.append(
+        f'<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">'
+        f'<stop offset="0" stop-color="#121014"/><stop offset="1" stop-color="{BLACK}"/></linearGradient>'
+        f'<radialGradient id="fire" cx=".87" cy="1.12" r=".5">'
+        f'<stop offset="0" stop-color="{RED}" stop-opacity=".5"/>'
+        f'<stop offset="1" stop-color="{RED}" stop-opacity="0"/></radialGradient>'
+        f'<clipPath id="card"><rect width="{w}" height="{h}"/></clipPath>'
+    )
+    svg.add(f'<rect width="{w}" height="{h}" fill="url(#bg)"/><rect width="{w}" height="{h}" fill="url(#fire)"/>')
+    embers(svg, 40, [(1100, 1570)] * 3 + [(440, 1100)] * 2, h, 300, 9)
+    emblem(svg, 1390, 190)
+    metal(svg)
+    x, limit = 520, 1270
+    title = "DÉVELOPPEUR GAMEPLAY"
+    check("bannière LinkedIn : titre", x + SERIF_BLACK.width(title, 46, 3), limit)
+    svg.text(x, 170, title, SERIF_BLACK, 46, "url(#metal)", spacing=3, extra='filter="url(#lift)"')
+    svg.add(f'<path d="M{x + 2} 198H{x + 82}" stroke="{RED}" stroke-width="2.5"/>' + diamond(x + 90, 198, 4.5, RED))
+    svg.text(x, 244, "Unity · C# · Unreal Engine · Multijoueur", SANS, 25, TEXT, opacity=.92)
+    svg.text(x, 290, "github.com/Terrenoss", SANS_SB, 20, GOLD)
+    svg.add(f'<path d="M0 {h - .75}H{w}" stroke="{GOLD}" stroke-opacity=".5" stroke-width="1.5"/>')
     return svg
 
 
@@ -1089,7 +1130,8 @@ SMALL_GAMES = [
 
 def main(names):
     builders = {"banniere.svg": banner, "arsenal.svg": lambda: arsenal(STACK), "footer.svg": footer,
-                "streak.svg": streak_card, "contact.svg": lambda: contact_button("ME CONTACTER SUR LINKEDIN")}
+                "streak.svg": streak_card, "contact.svg": lambda: contact_button("ME CONTACTER SUR LINKEDIN"),
+                "linkedin.svg": linkedin_banner}
     builders |= {f"titre-{slug}.svg": (lambda t=title, i=i: heading(t, i))
                  for i, (slug, title) in enumerate(HEADINGS.items())}
     builders |= {f"projet-{p.slug}.svg": (lambda p=p: project_card(p)) for p in PROJECTS}
